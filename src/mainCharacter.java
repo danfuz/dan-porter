@@ -8,4 +8,10 @@ public class mainCharacter {
         xcenter = x+width/2;
         ycenter = y+height/2;
     }
+    public void moveY(int mY){
+        y += mY;
+    }
+    public void moveX(int mX){
+        x += mX;
+    }
 }
