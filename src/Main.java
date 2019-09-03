@@ -7,20 +7,25 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main extends JPanel{
+public class Main extends JPanel implements ActionListener{
 
     public static final int WIDTH=600, HEIGHT=600;
     private Timer timer;
+    private mainCharacter x;
+    private boolean leftt, rightt;
 
 
 
     public Main(){
 
-
+        x = new mainCharacter(300,300,40,40);
+        leftt = false;
+        rightt = false;
         timer = new Timer(1000 / 60, e -> update());
         timer.start();
         setKeyListener();
     }
+    public void ac
 
     public void update() {
 
@@ -28,10 +33,12 @@ public class Main extends JPanel{
         repaint();
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        g2.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
 
 
 
@@ -46,11 +53,27 @@ public class Main extends JPanel{
             }
             @Override
             public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_RIGHT){
+                    rightt = true;
+                    leftt = false;
+                }
+                if (key == KeyEvent.VK_LEFT){
+                    leftt = true;
+                    rightt = false;
+                }
+                update();
 
             }
             @Override
             public void keyReleased(KeyEvent e) {
-
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_RIGHT){
+                    rightt = false;
+                }
+                if (key == KeyEvent.VK_LEFT){
+                    leftt = false;
+                }
             }
         });
     }
