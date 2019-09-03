@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main extends JPanel implements ActionListener{
+public class Main extends JPanel{
 
     public static final int WIDTH=600, HEIGHT=600;
     private Timer timer;
@@ -25,11 +25,16 @@ public class Main extends JPanel implements ActionListener{
         timer.start();
         setKeyListener();
     }
-    public void ac
 
     public void update() {
+        System.out.println("test");
 
-
+        if (rightt){
+            x.moveX(5);
+        }
+        if (leftt){
+            x.moveX(-5);
+        }
         repaint();
     }
 
@@ -62,8 +67,6 @@ public class Main extends JPanel implements ActionListener{
                     leftt = true;
                     rightt = false;
                 }
-                update();
-
             }
             @Override
             public void keyReleased(KeyEvent e) {
