@@ -45,6 +45,9 @@ public class Main extends JPanel{
             while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
                 x.moveY(1);
             }
+            while (p.rightC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
+                x.moveY(1);
+            }
         }
 
         if (rightt){
