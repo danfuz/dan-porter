@@ -50,7 +50,7 @@ public class Main extends JPanel{
             x.moveY(-(int)(g));
         }
         if (!grounded && g < 20) {
-            g++;
+            g+=.75;
         }
         while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
             x.moveY(1);
@@ -84,7 +84,7 @@ public class Main extends JPanel{
                     rightt = true;
                     leftt = false;
                 }
-                if (key == KeyEvent.VK_UP){
+                if (key == KeyEvent.VK_UP && grounded){
                     jumpp = true;
                     x.moveY(1);
                 }
@@ -102,8 +102,9 @@ public class Main extends JPanel{
                 if (key == KeyEvent.VK_LEFT){
                     leftt = false;
                 }
-                if (key == KeyEvent.VK_UP){
+                if (key == KeyEvent.VK_UP && jumpp == true && g < 12){
                     jumpp = false;
+                    g = 2;
                 }
             }
         });
