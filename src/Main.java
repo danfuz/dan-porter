@@ -21,12 +21,15 @@ public class Main extends JPanel{
 
     public Main(){
 
-        x = new mainCharacter(300,300,40,40);
+        x = new mainCharacter(400,300,40,40);
         leftt = false;
         rightt = false;
         jumpp = false;
         plat = new ArrayList<Platform>();
         plat.add(new Platform(0,550,600,50));
+        plat.add(new Platform(100,0,50,500));
+        plat.add(new Platform(500,0,50,500));
+
 
         g = 0;
         grounded = false;
@@ -36,19 +39,43 @@ public class Main extends JPanel{
     }
 
     public void update() {
+        int n = 0;
         for(Platform p: plat){
+            while (p.bottomC(new Rectangle(x.getX()+1, x.getY()+1, x.getWidth()-2, x.getHeight())) && ! p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
+                x.moveY(-1);
+                jumpp = false;
+            }
             if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
                 grounded = true;
+                n = 1;
                 g = 0;
-            } else{
-                grounded = false;
             }
-            while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
+            int nn = 0;
+            while (p.rightC(new Rectangle(x.getX()-1, x.getY(), x.getWidth(), x.getHeight())) && ! p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()))){
+                x.moveX(-1);
+                nn++;
+                if (nn == 24){
+                    break;
+                }
+            }
+            nn = 0;
+
+            while (p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight())) && !p.rightC(new Rectangle(x.getX()-1, x.getY(), x.getWidth(), x.getHeight()))){
+                x.moveX(1);
+                nn++;
+                if (nn == 24){
+                    break;
+                }
+            }
+            while (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
                 x.moveY(1);
             }
-            while (p.rightC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
-                x.moveY(1);
-            }
+
+
+
+        }
+        if (n == 0){
+            grounded = false;
         }
 
         if (rightt){
@@ -56,6 +83,12 @@ public class Main extends JPanel{
         }
         if (leftt){
             x.moveX(-5);
+        }
+        while (x.getX() < 0){
+            x.moveX(1);
+        }
+        while (x.getX() + x.getWidth() > getWidth()){
+            x.moveX(-1);
         }
         if (jumpp && !grounded){
             x.moveY(12-(int)(g));
@@ -105,6 +138,7 @@ public class Main extends JPanel{
                     leftt = true;
                     rightt = false;
                 }
+                System.out.println(jumpp + " " + grounded);
             }
             @Override
             public void keyReleased(KeyEvent e) {
@@ -117,7 +151,7 @@ public class Main extends JPanel{
                 }
                 if (key == KeyEvent.VK_UP && jumpp == true && g < 12){
                     jumpp = false;
-                    g = 2;
+                    g = 1;
                 }
             }
         });

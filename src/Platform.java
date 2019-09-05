@@ -44,5 +44,16 @@ public class Platform {
         return false;
 
     }
+    public boolean bottomC(Rectangle r){
+        int x1 = r.x+1;
+        int x2 = r.x+r.width-1;
+        int x3 = r.x+r.width/2;
+        int yy = r.y;
+        if (rec().contains(new Point(x1,yy)) || rec().contains(new Point(x2,yy)) || rec().contains(new Point(x3,yy))){
+            return true;
+        }
+        return false;
+
+    }
 
 }
