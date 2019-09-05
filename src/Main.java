@@ -52,6 +52,9 @@ public class Main extends JPanel{
         if (!grounded && g < 20) {
             g++;
         }
+        while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
+            x.moveY(1);
+        }
         repaint();
     }
 
