@@ -18,6 +18,7 @@ public class Main extends JPanel{
 
 
 
+
     public Main(){
 
         x = new mainCharacter(300,300,40,40);
