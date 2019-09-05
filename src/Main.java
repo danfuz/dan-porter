@@ -12,7 +12,7 @@ public class Main extends JPanel{
     public static final int WIDTH=600, HEIGHT=600;
     private Timer timer;
     private mainCharacter x;
-    private boolean leftt, rightt;
+    private boolean leftt, rightt, jumpp;
 
 
 
@@ -21,19 +21,21 @@ public class Main extends JPanel{
         x = new mainCharacter(300,300,40,40);
         leftt = false;
         rightt = false;
+        jumpp = false;
         timer = new Timer(1000 / 60, e -> update());
         timer.start();
         setKeyListener();
     }
 
     public void update() {
-        System.out.println("test");
-
         if (rightt){
             x.moveX(5);
         }
         if (leftt){
             x.moveX(-5);
+        }
+        if (jumpp){
+            x.moveY(4);
         }
         repaint();
     }
@@ -63,6 +65,9 @@ public class Main extends JPanel{
                     rightt = true;
                     leftt = false;
                 }
+                if (key == KeyEvent.VK_UP){
+                    jumpp = true;
+                }
                 if (key == KeyEvent.VK_LEFT){
                     leftt = true;
                     rightt = false;
@@ -76,6 +81,9 @@ public class Main extends JPanel{
                 }
                 if (key == KeyEvent.VK_LEFT){
                     leftt = false;
+                }
+                if (key == KeyEvent.VK_UP){
+                    jumpp = false;
                 }
             }
         });

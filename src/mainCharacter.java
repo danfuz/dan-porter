@@ -12,7 +12,7 @@ public class mainCharacter {
         ycenter = y+height/2;
     }
     public void moveY(int mY){
-        y += mY;
+        y -= mY;
     }
     public void moveX(int mX){
         x += mX;
