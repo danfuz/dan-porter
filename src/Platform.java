@@ -22,5 +22,27 @@ public class Platform {
         return false;
 
     }
+    public boolean rightC(Rectangle r){
+        int y1 = r.y + r.height;
+        int y2 = r.y+r.height-1;
+        int y3 = r.y+r.height/2;
+        int xx = r.x+r.width;
+        if (rec().contains(new Point(xx,y1)) || rec().contains(new Point(xx,y2)) || rec().contains(new Point(xx,y3))){
+            return true;
+        }
+        return false;
+
+    }
+    public boolean leftC(Rectangle r){
+        int y1 = r.y + r.height;
+        int y2 = r.y+r.height-1;
+        int y3 = r.y+r.height/2;
+        int xx = r.x;
+        if (rec().contains(new Point(xx,y1)) || rec().contains(new Point(xx,y2)) || rec().contains(new Point(xx,y3))){
+            return true;
+        }
+        return false;
+
+    }
 
 }

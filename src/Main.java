@@ -13,8 +13,8 @@ public class Main extends JPanel{
     private Timer timer;
     private mainCharacter x;
     private double g;
+    private ArrayList<Platform> plat;
     private boolean leftt, rightt, jumpp, grounded;
-    Platform p = new Platform(300,400,600,50);
 
 
 
@@ -25,6 +25,9 @@ public class Main extends JPanel{
         leftt = false;
         rightt = false;
         jumpp = false;
+        plat = new ArrayList<Platform>();
+        plat.add(new Platform(0,550,600,50));
+
         g = 0;
         grounded = false;
         timer = new Timer(1000 / 60, e -> update());
@@ -33,12 +36,18 @@ public class Main extends JPanel{
     }
 
     public void update() {
-        if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
-            grounded = true;
-            g = 0;
-        } else{
-            grounded = false;
+        for(Platform p: plat){
+            if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
+                grounded = true;
+                g = 0;
+            } else{
+                grounded = false;
+            }
+            while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
+                x.moveY(1);
+            }
         }
+
         if (rightt){
             x.moveX(5);
         }
@@ -51,11 +60,9 @@ public class Main extends JPanel{
             x.moveY(-(int)(g));
         }
         if (!grounded && g < 20) {
-            g++;
+            g+=.75;
         }
-        while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
-            x.moveY(1);
-        }
+
         repaint();
     }
 
@@ -65,7 +72,9 @@ public class Main extends JPanel{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
-        g2.fill(p.rec());
+        for(Platform p: plat) {
+            g2.fill(p.rec());
+        }
 
 
 
@@ -85,7 +94,7 @@ public class Main extends JPanel{
                     rightt = true;
                     leftt = false;
                 }
-                if (key == KeyEvent.VK_UP){
+                if (key == KeyEvent.VK_UP && grounded){
                     jumpp = true;
                     x.moveY(1);
                 }
@@ -103,8 +112,9 @@ public class Main extends JPanel{
                 if (key == KeyEvent.VK_LEFT){
                     leftt = false;
                 }
-                if (key == KeyEvent.VK_UP){
+                if (key == KeyEvent.VK_UP && jumpp == true && g < 12){
                     jumpp = false;
+                    g = 2;
                 }
             }
         });
