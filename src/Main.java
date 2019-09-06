@@ -14,6 +14,8 @@ public class Main extends JPanel{
     private mainCharacter x;
     private double g;
     private ArrayList<Platform> plat;
+    private ArrayList<boomerang> boomerangs;
+    //private ArrayList<Platform> plat;
     private boolean leftt, rightt, jumpp, grounded;
 
 
@@ -21,15 +23,12 @@ public class Main extends JPanel{
 
     public Main(){
 
-        x = new mainCharacter(400,300,40,40);
+        x = new mainCharacter(300,300,40,40);
         leftt = false;
         rightt = false;
         jumpp = false;
         plat = new ArrayList<Platform>();
         plat.add(new Platform(0,550,600,50));
-        plat.add(new Platform(100,300,50,500));
-        plat.add(new Platform(500,0,50,500));
-
 
         g = 0;
         grounded = false;
@@ -39,48 +38,19 @@ public class Main extends JPanel{
     }
 
     public void update() {
-        int n = 0;
         for(Platform p: plat){
-            while (p.bottomC(new Rectangle(x.getX()+1, x.getY()+1, x.getWidth()-2, x.getHeight())) && ! p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
-                x.moveY(-1);
-                jumpp = false;
-            }
-            for (int i = 0; i < g; i++) {
-                if (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
-                    x.moveY(1);
-                }
-            }
             if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
                 grounded = true;
-                n = 1;
                 g = 0;
+            } else{
+                grounded = false;
             }
-            int nn = 0;
-            while (p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()-1)) && ! p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()))){
-                x.moveX(-1);
-                nn++;
-                if (nn == 24){
-                    break;
-                }
-            }
-            nn = 0;
-
-            while (p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()-1)) && !p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()))){
-                x.moveX(1);
-                nn++;
-                if (nn == 24){
-                    break;
-                }
-            }
-            while (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
+            while (p.topC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
                 x.moveY(1);
             }
-
-
-
-        }
-        if (n == 0){
-            grounded = false;
+//            while (p.rightC(new Rectangle(x.getX(), x.getY()-1, x.getWidth(), x.getHeight()))){
+//                x.moveY(1);
+//            }
         }
 
         if (rightt){
@@ -88,12 +58,6 @@ public class Main extends JPanel{
         }
         if (leftt){
             x.moveX(-5);
-        }
-        while (x.getX() < 0){
-            x.moveX(1);
-        }
-        while (x.getX() + x.getWidth() > getWidth()){
-            x.moveX(-1);
         }
         if (jumpp && !grounded){
             x.moveY(12-(int)(g));
@@ -137,13 +101,18 @@ public class Main extends JPanel{
                 }
                 if (key == KeyEvent.VK_UP && grounded){
                     jumpp = true;
-                    x.moveY(3);
+                    x.moveY(1);
                 }
                 if (key == KeyEvent.VK_LEFT){
                     leftt = true;
                     rightt = false;
                 }
-                System.out.println(jumpp + " " + grounded);
+                if (key == KeyEvent.VK_Z){
+                    boomerangs.add(new boomerang(x.getX(),x.getY(),false));
+                }
+                if (key == KeyEvent.VK_X){
+                    boomerangs.add(new boomerang(x.getX(),x.getY(),true));
+                }
             }
             @Override
             public void keyReleased(KeyEvent e) {
@@ -156,7 +125,7 @@ public class Main extends JPanel{
                 }
                 if (key == KeyEvent.VK_UP && jumpp == true && g < 12){
                     jumpp = false;
-                    g = 1;
+                    g = 2;
                 }
             }
         });
