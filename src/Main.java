@@ -12,7 +12,7 @@ public class Main extends JPanel{
     public static final int WIDTH=600, HEIGHT=600;
     private Timer timer;
     private mainCharacter x;
-    private double g;
+    private double g, rotate;
     private ArrayList<Platform> plat;
     private ArrayList<Enemies> enemies;
     private ArrayList<boomerang> boomerangs;
@@ -28,18 +28,15 @@ public class Main extends JPanel{
         x = new mainCharacter(400,400,40,40);
         dead = false;
         leftt = false;
+        rotate = 0;
         rightt = false;
         jumpp = false;
         plat = new ArrayList<Platform>();
+        boomerangs = new ArrayList<boomerang>();
         enemies = new ArrayList<Enemies>();
 
 
         plat.add(new Platform(0,550,600,50));
-        plat.add(new Platform(100,300,50,500));
-        plat.add(new Platform(500,0,50,500));
-
-        enemies.add(new Enemies(200, 400, 40, 40, 0, 5));
-
 
         g = 0;
         grounded = false;
@@ -96,6 +93,28 @@ public class Main extends JPanel{
                 grounded = false;
             }
 
+        rotate += .1;
+        for (int i = 0; i < boomerangs.size(); i++) {
+            boomerangs.get(i).move();
+            boomerangs.get(i).setCurrentRotation(boomerangs.get(i).getCurrentRotation()+(int)(rotate));
+        }
+
+
+
+        if (rightt){
+            x.moveX(5);
+        }
+        if (leftt){
+            x.moveX(-5);
+        }
+        if (jumpp && !grounded){
+            x.moveY(12-(int)(g));
+        } else{
+            x.moveY(-(int)(g));
+        }
+        if (!grounded && g < 20) {
+            g+=.75;
+        }
             if (rightt) {
                 x.moveX(5);
             }
@@ -141,6 +160,9 @@ public class Main extends JPanel{
                 dead = true;
             }
         }
+        for(boomerang b: boomerangs){
+            b.draw(g2);
+        }
 
 
 
@@ -176,8 +198,6 @@ public class Main extends JPanel{
                         boomerangs.add(new boomerang(x.getX(),x.getY(),true));
                     }
                 }
-                //System.out.println(jumpp + " " + grounded);
-
             }
             @Override
             public void keyReleased(KeyEvent e) {

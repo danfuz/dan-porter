@@ -1,12 +1,13 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class boomerang {
 
     private int x, y, speed;
     private Boolean dir;
-    private Image pic;
+    private BufferedImage pic;
     private int currentRotation;
     private Point loc;
 
@@ -16,10 +17,10 @@ public class boomerang {
     public boomerang(int x, int y, boolean d){
         this.x = x;
         this.y = y;
+        loc = new Point(x,y);
         dir = d;
         currentRotation = 0;
-        setPic();
-        loc.setLocation(x,y);
+        setPic("boomerang.png");
     }
 
     public void move(){
@@ -45,10 +46,19 @@ public class boomerang {
 //out of 360
 
 
+    public void setCurrentRotation(int currentRotation) {
+        this.currentRotation = currentRotation;
+    }
+
+    public int getCurrentRotation() {
+        return currentRotation;
+    }
+
     /**
      * This draws the image pic at the Point loc, rotated to face dir.
      */
     public void draw(Graphics2D g2) {
+
 
         double halfWidth = pic.getWidth() / 2;
         double halfHeight = pic.getHeight() / 2;
