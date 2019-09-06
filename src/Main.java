@@ -14,21 +14,29 @@ public class Main extends JPanel{
     private mainCharacter x;
     private double g;
     private ArrayList<Platform> plat;
+    private ArrayList<Enemies> enemies;
     private boolean leftt, rightt, jumpp, grounded;
+    private boolean dead;
 
 
 
 
     public Main(){
 
-        x = new mainCharacter(400,300,40,40);
+        x = new mainCharacter(400,400,40,40);
+        dead = false;
         leftt = false;
         rightt = false;
         jumpp = false;
         plat = new ArrayList<Platform>();
+        enemies = new ArrayList<Enemies>();
+
+
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
+
+        enemies.add(new Enemies(200, 400, 40, 40, 0, 5));
 
 
         g = 0;
@@ -39,72 +47,80 @@ public class Main extends JPanel{
     }
 
     public void update() {
-        int n = 0;
-        for(Platform p: plat){
-            while (p.bottomC(new Rectangle(x.getX()+1, x.getY()+1, x.getWidth()-2, x.getHeight())) && ! p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
-                x.moveY(-1);
-                jumpp = false;
-            }
-            for (int i = 0; i < g; i++) {
-                if (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
+        if (dead == false) {
+            int n = 0;
+            for (Platform p : plat) {
+                while (p.bottomC(new Rectangle(x.getX() + 1, x.getY() + 1, x.getWidth() - 2, x.getHeight())) && !p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))) {
+                    x.moveY(-1);
+                    jumpp = false;
+                }
+                for (int i = 0; i < g; i++) {
+                    if (p.topC(new Rectangle(x.getX() + 1, x.getY() - 1, x.getWidth() - 2, x.getHeight()))) {
+                        x.moveY(1);
+                        grounded = true;
+                        jumpp = false;
+
+                    }
+                }
+                if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))) {
+                    grounded = true;
+                    n = 1;
+                    g = 0;
+                }
+                int nn = 0;
+                while (p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth() - 1, x.getHeight() - 1)) && !p.leftC(new Rectangle(x.getX() + 1, x.getY(), x.getWidth(), x.getHeight()))) {
+                    x.moveX(-1);
+                    nn++;
+                    if (nn == 24) {
+                        break;
+                    }
+                }
+                nn = 0;
+
+                while (p.leftC(new Rectangle(x.getX() + 1, x.getY(), x.getWidth(), x.getHeight() - 1)) && !p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth() - 1, x.getHeight()))) {
+                    x.moveX(1);
+                    nn++;
+                    if (nn == 24) {
+                        break;
+                    }
+                }
+                while (p.topC(new Rectangle(x.getX() + 1, x.getY() - 1, x.getWidth() - 2, x.getHeight()))) {
                     x.moveY(1);
                 }
-            }
-            if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
-                grounded = true;
-                n = 1;
-                g = 0;
-            }
-            int nn = 0;
-            while (p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()-1)) && ! p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()))){
-                x.moveX(-1);
-                nn++;
-                if (nn == 24){
-                    break;
-                }
-            }
-            nn = 0;
 
-            while (p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()-1)) && !p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()))){
+
+            }
+            if (n == 0) {
+                grounded = false;
+            }
+
+            if (rightt) {
+                x.moveX(5);
+            }
+            if (leftt) {
+                x.moveX(-5);
+            }
+            while (x.getX() < 0) {
                 x.moveX(1);
-                nn++;
-                if (nn == 24){
-                    break;
-                }
             }
-            while (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
-                x.moveY(1);
+            while (x.getX() + x.getWidth() > getWidth()) {
+                x.moveX(-1);
+            }
+            if (jumpp && !grounded) {
+                x.moveY(12 - (int) (g));
+            } else {
+                x.moveY(-(int) (g));
+            }
+            if (!grounded && g < 24) {
+                g += .75;
+            }
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies.get(i).move();
             }
 
 
-
+            repaint();
         }
-        if (n == 0){
-            grounded = false;
-        }
-
-        if (rightt){
-            x.moveX(5);
-        }
-        if (leftt){
-            x.moveX(-5);
-        }
-        while (x.getX() < 0){
-            x.moveX(1);
-        }
-        while (x.getX() + x.getWidth() > getWidth()){
-            x.moveX(-1);
-        }
-        if (jumpp && !grounded){
-            x.moveY(12-(int)(g));
-        } else{
-            x.moveY(-(int)(g));
-        }
-        if (!grounded && g < 20) {
-            g+=.75;
-        }
-
-        repaint();
     }
 
 
@@ -115,6 +131,13 @@ public class Main extends JPanel{
         g2.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
         for(Platform p: plat) {
             g2.fill(p.rec());
+        }
+        for(Enemies p: enemies) {
+            g2.fill(p.rec());
+            if (p.intersects(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
+                System.out.println("DEAD");
+                dead = true;
+            }
         }
 
 
@@ -130,20 +153,22 @@ public class Main extends JPanel{
             }
             @Override
             public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-                if (key == KeyEvent.VK_RIGHT){
-                    rightt = true;
-                    leftt = false;
+                if (dead == false) {
+                    int key = e.getKeyCode();
+                    if (key == KeyEvent.VK_RIGHT) {
+                        rightt = true;
+                        leftt = false;
+                    }
+                    if (key == KeyEvent.VK_UP && grounded) {
+                        jumpp = true;
+                        x.moveY(3);
+                    }
+                    if (key == KeyEvent.VK_LEFT) {
+                        leftt = true;
+                        rightt = false;
+                    }
                 }
-                if (key == KeyEvent.VK_UP && grounded){
-                    jumpp = true;
-                    x.moveY(3);
-                }
-                if (key == KeyEvent.VK_LEFT){
-                    leftt = true;
-                    rightt = false;
-                }
-                System.out.println(jumpp + " " + grounded);
+                //System.out.println(jumpp + " " + grounded);
             }
             @Override
             public void keyReleased(KeyEvent e) {
