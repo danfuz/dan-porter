@@ -37,6 +37,13 @@ public class Main extends JPanel{
 
 
         plat.add(new Platform(0,550,600,50));
+        plat.add(new Platform(100,300,50,500));
+        plat.add(new Platform(500,0,50,500));
+
+        for (int i = 0; i < 9; i++) {
+            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+        }
+
 
         g = 0;
         grounded = false;
@@ -198,6 +205,7 @@ public class Main extends JPanel{
                         boomerangs.add(new boomerang(x.getX(),x.getY(),true));
                     }
                 }
+                //System.out.println(jumpp + " " + grounded);
             }
             @Override
             public void keyReleased(KeyEvent e) {
