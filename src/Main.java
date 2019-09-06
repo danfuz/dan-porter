@@ -36,7 +36,9 @@ public class Main extends JPanel{
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
 
-        enemies.add(new Enemies(200, 400, 40, 40, 0, 5));
+        for (int i = 0; i < 9; i++) {
+            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+        }
 
 
         g = 0;
