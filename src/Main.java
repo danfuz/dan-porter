@@ -27,7 +27,7 @@ public class Main extends JPanel{
         jumpp = false;
         plat = new ArrayList<Platform>();
         plat.add(new Platform(0,550,600,50));
-        plat.add(new Platform(100,0,50,500));
+        plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
 
 
@@ -45,13 +45,18 @@ public class Main extends JPanel{
                 x.moveY(-1);
                 jumpp = false;
             }
+            for (int i = 0; i < g; i++) {
+                if (p.topC(new Rectangle(x.getX()+1, x.getY()-1, x.getWidth()-2, x.getHeight()))){
+                    x.moveY(1);
+                }
+            }
             if (p.topC(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
                 grounded = true;
                 n = 1;
                 g = 0;
             }
             int nn = 0;
-            while (p.rightC(new Rectangle(x.getX()-1, x.getY(), x.getWidth(), x.getHeight())) && ! p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()))){
+            while (p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()-1)) && ! p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()))){
                 x.moveX(-1);
                 nn++;
                 if (nn == 24){
@@ -60,7 +65,7 @@ public class Main extends JPanel{
             }
             nn = 0;
 
-            while (p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight())) && !p.rightC(new Rectangle(x.getX()-1, x.getY(), x.getWidth(), x.getHeight()))){
+            while (p.leftC(new Rectangle(x.getX()+1, x.getY(), x.getWidth(), x.getHeight()-1)) && !p.rightC(new Rectangle(x.getX(), x.getY(), x.getWidth()-1, x.getHeight()))){
                 x.moveX(1);
                 nn++;
                 if (nn == 24){
@@ -132,7 +137,7 @@ public class Main extends JPanel{
                 }
                 if (key == KeyEvent.VK_UP && grounded){
                     jumpp = true;
-                    x.moveY(1);
+                    x.moveY(3);
                 }
                 if (key == KeyEvent.VK_LEFT){
                     leftt = true;
