@@ -6,6 +6,7 @@ import java.io.File;
 public class boomerang {
 
     private int x, y, speed;
+    private double yy;
     private Boolean dir;
     private BufferedImage pic;
     private int currentRotation;
@@ -17,11 +18,13 @@ public class boomerang {
     public boomerang(int x, int y, boolean d){
         this.x = x;
         this.y = y;
+        yy = 0;
         loc = new Point(x,y);
         dir = d;
         currentRotation = 0;
         setPic("boomerang.png");
     }
+
 
     public void move(){
         int dist = 0;
@@ -35,11 +38,19 @@ public class boomerang {
         }
         if(dir){
             x += speed;
+
         }
         else{
             x-= speed;
 
+
         }
+        yy+=.3;
+        if (yy >=1) {
+            y += 1;
+            yy -=1;
+        }
+
         loc.setLocation(x, y);
     }
 
