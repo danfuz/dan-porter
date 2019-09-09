@@ -25,7 +25,7 @@ public class Main extends JPanel{
 
     public Main(){
 
-        x = new mainCharacter(400,400,40,40);
+        x = new mainCharacter(400,500,40,40);
         dead = false;
         leftt = false;
         rotate = 0;
@@ -108,20 +108,9 @@ public class Main extends JPanel{
 
 
 
-        if (rightt){
-            x.moveX(5);
-        }
-        if (leftt){
-            x.moveX(-5);
-        }
-        if (jumpp && !grounded){
-            x.moveY(12-(int)(g));
-        } else{
-            x.moveY(-(int)(g));
-        }
-        if (!grounded && g < 20) {
-            g+=.75;
-        }
+
+
+
             if (rightt) {
                 x.moveX(5);
             }
