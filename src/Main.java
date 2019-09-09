@@ -19,6 +19,7 @@ public class Main extends JPanel{
     //private ArrayList<Platform> plat;
     private boolean leftt, rightt, jumpp, grounded;
     private boolean dead;
+    private int interval;
 
 
 
@@ -34,15 +35,16 @@ public class Main extends JPanel{
         plat = new ArrayList<Platform>();
         boomerangs = new ArrayList<boomerang>();
         enemies = new ArrayList<Enemies>();
+        interval = 0;
 
 
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
 
-        for (int i = 0; i < 9; i++) {
-            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
-        }
+//        for (int i = 0; i < 9; i++) {
+//            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+//        }
 
 
         g = 0;
@@ -100,11 +102,17 @@ public class Main extends JPanel{
                 grounded = false;
             }
 
-        rotate += .1;
+        rotate = 1;
+        interval++;
+        if(interval%2==0){
+            rotate = 0;
+        }
         for (int i = 0; i < boomerangs.size(); i++) {
             boomerangs.get(i).move();
+//            boomerangs.get(i).setCurrentRotation(3);
             boomerangs.get(i).setCurrentRotation(boomerangs.get(i).getCurrentRotation()+(int)(rotate));
         }
+
 
 
 

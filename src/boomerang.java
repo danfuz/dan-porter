@@ -25,6 +25,12 @@ public class boomerang {
 
     public void move(){
         int dist = 0;
+        if (x+40>=Main.WIDTH){
+            dir = false;
+        }
+        if (x<=0){
+            dir = true;
+        }
         if(dir){
             dist = Main.WIDTH - x;
             x += dist/30;
@@ -33,6 +39,8 @@ public class boomerang {
             dist = x;
             x -= dist/30;
         }
+//        x++;
+        loc.setLocation(x, y);
     }
 
     public void setPic(String fileName) {
