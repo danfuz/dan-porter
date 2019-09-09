@@ -25,6 +25,8 @@ public class boomerang {
 
     public void move(){
         int dist = 0;
+        int d = Math.abs(Main.WIDTH/2-(x+20));
+        int speed = Math.abs(-d/90+6);
         if (x+40>=Main.WIDTH){
             dir = false;
         }
@@ -32,14 +34,12 @@ public class boomerang {
             dir = true;
         }
         if(dir){
-            dist = Main.WIDTH - x;
-            x += dist/30;
+            x += speed;
         }
         else{
-            dist = x;
-            x -= dist/30;
+            x-= speed;
+
         }
-//        x++;
         loc.setLocation(x, y);
     }
 
