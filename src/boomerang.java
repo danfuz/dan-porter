@@ -7,7 +7,7 @@ public class boomerang {
 
     private int x, y, speed;
     private double yy;
-    private Boolean dir;
+    private Boolean dir, up;
     private BufferedImage pic;
     private int currentRotation;
     private Point loc;
@@ -23,6 +23,7 @@ public class boomerang {
         dir = d;
         currentRotation = 0;
         setPic("boomerang.png");
+        up = true;
     }
 
 
@@ -45,10 +46,15 @@ public class boomerang {
 
 
         }
-        yy+=.3;
-        if (yy >=1) {
-            y += 1;
-            yy -=1;
+        yy += .3;
+        if(y >= 515){
+            up = false;
+        }
+        if(up) {
+            if (yy >= 1) {
+                y += 1;
+                yy -= 1;
+            }
         }
 
         loc.setLocation(x, y);
@@ -85,6 +91,7 @@ public class boomerang {
         g2.drawImage(pic, loc.x, loc.y, null);
         g2.rotate(-currentRotation, loc.x + halfWidth, loc.y + halfHeight);
     }
+
 
 
 }

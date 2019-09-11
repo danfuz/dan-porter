@@ -1,8 +1,13 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 
 public class Enemies {
     private int x, y, width, height, direction, speed;
+    private BufferedImage pic;
     public Enemies(int xx, int yy, int w, int h, int d, int s){
         x = xx;
         y = yy;
@@ -10,6 +15,7 @@ public class Enemies {
         height = h;
         direction = d;
         speed = s;
+        setPic("jiming.png");
     }
     public void move(){
         for (int i = 0; i < speed; i++) {
@@ -28,6 +34,15 @@ public class Enemies {
             return true;
         }
         return false;
+    }
+
+    public void setPic(String fileName) {
+        try {
+            pic = ImageIO.read(new File("res/" + fileName));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
