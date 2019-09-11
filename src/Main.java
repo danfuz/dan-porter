@@ -111,6 +111,10 @@ public class Main extends JPanel{
             boomerangs.get(i).move();
 //            boomerangs.get(i).setCurrentRotation(3);
             boomerangs.get(i).setCurrentRotation(boomerangs.get(i).getCurrentRotation()+(int)(rotate));
+            if (boomerangs.get(i).off()){
+                boomerangs.remove(i);
+                i--;
+            }
         }
 
 
@@ -140,6 +144,11 @@ public class Main extends JPanel{
             }
             for (int i = 0; i < enemies.size(); i++) {
                 enemies.get(i).move();
+            }
+            for (boomerang b: boomerangs){
+                if (b.intersects(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
+                    dead = true;
+                }
             }
 
 
@@ -195,10 +204,10 @@ public class Main extends JPanel{
                         rightt = false;
                     }
                     if (key == KeyEvent.VK_Z){
-                        boomerangs.add(new boomerang(x.getX(),x.getY(),false));
+                        boomerangs.add(new boomerang(x.getX()-x.getWidth()-2,x.getY(),false));
                     }
                     if (key == KeyEvent.VK_X){
-                        boomerangs.add(new boomerang(x.getX(),x.getY(),true));
+                        boomerangs.add(new boomerang(x.getX()+x.getWidth()+2,x.getY(),true));
                     }
                 }
                 //System.out.println(jumpp + " " + grounded);

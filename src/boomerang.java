@@ -2,6 +2,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.awt.Rectangle;
+
 
 public class boomerang {
 
@@ -90,6 +92,19 @@ public class boomerang {
         g2.rotate(currentRotation, loc.x + halfWidth, loc.y + halfHeight);
         g2.drawImage(pic, loc.x, loc.y, null);
         g2.rotate(-currentRotation, loc.x + halfWidth, loc.y + halfHeight);
+    }
+    public boolean off(){
+        if (y  > Main.HEIGHT){
+            return true;
+        }
+        return false;
+    }
+    public boolean intersects(Rectangle o){
+        //System.out.println(pic.getWidth() + " " + pic.getHeight());
+        if (new Rectangle(x,y,20,17).intersects(o)){
+            return true;
+        }
+        return false;
     }
 
 
