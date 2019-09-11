@@ -38,6 +38,7 @@ public class Main extends JPanel{
         interval = 0;
 
 
+
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
@@ -148,6 +149,17 @@ public class Main extends JPanel{
             for (boomerang b: boomerangs){
                 if (b.intersects(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
                     dead = true;
+                }
+            }
+
+            for (int i = 0; i < boomerangs.size(); i++) {
+                for (int j = 0; j < enemies.size(); j++) {
+                    if(boomerangs.get(i).intersects(
+                            new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
+                                    enemies.get(j).getWidth(), enemies.get(j).getHeight()))){
+                        boomerangs.remove(i);
+                        enemies.remove(j);
+                    }
                 }
             }
 
