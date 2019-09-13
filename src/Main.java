@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -41,10 +38,11 @@ public class Main extends JPanel{
 
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
-        plat.add(new Platform(500,0,50,500));
+//        plat.add(new Platform(500,0,50,500));
 
-        for (int i = 0; i < 9; i++) {
-            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+        for (int i = 0; i < 19; i++) {
+            enemies.add(new Enemies(30*i, 400, 30, 30, 0, 5));
+            enemies.add(new Enemies(30*i, 400, 30, 30, 0, 5));
         }
 
 
@@ -56,6 +54,9 @@ public class Main extends JPanel{
     }
 
     public void update() {
+//        for (int i = 10; i >= 0; i--) {
+//            System.out.println(i);
+//        }
         if (dead == false) {
             int n = 0;
             for (Platform p : plat) {

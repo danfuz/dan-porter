@@ -20,18 +20,40 @@ public class Enemies {
         setPic("jiming.png");
     }
     public void draw(Graphics2D g2, int tx, int ty) {
-
-        double ht = Math.abs(ty-c.y);
-        double bt = Math.abs(tx-c.x);
+        c.setLocation(x,y);
+        //System.out.println(tx + " " + ty);
+        double ht = -ty+c.y;
+        double bt = -tx+c.x;
         double hyp = Math.sqrt(ht*ht+bt*bt);
+        double angle = Math.toDegrees(Math.atan(ht/bt));
+        //System.out.println(angle);
+        if (ht < 0 && bt <=0){
+            angle +=180;
+        }
+        if (ht > 0 && bt <=0){
+            angle -=180;
+            angle +=360;
+        }
+
+        //System.out.println(angle);
+        //double a = Math.toDegrees(0);
+        //System.out.println(angle);
 
 
-        g2.translate(x+width/2, y+height/2);
-        //g2.rotate(30);
-        g2.translate(-(x+width/2), -(y+height/2));
+
+
+        g2.translate(x+15, y+15);
+        g2.rotate(Math.toRadians(angle));
+        g2.translate(-(x+15), -(y+15));
 
 
         g2.drawImage(pic, x, y, null);
+
+        g2.translate(x+15, y+15);
+        g2.rotate(Math.toRadians(-angle));
+        g2.translate(-(x+15), -(y+15));
+        //System.out.println(angle);
+
 
         //g2.rotate(-currentRotation, loc.x + halfWidth, loc.y + halfHeight);
 
