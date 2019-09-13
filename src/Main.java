@@ -27,6 +27,7 @@ public class Main extends JPanel{
     public Main(){
 
         x = new mainCharacter(400,500,40,40);
+
         dead = false;
         leftt = false;
         rotate = 0;
@@ -43,9 +44,7 @@ public class Main extends JPanel{
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
 
-        for (int i = 0; i < 9; i++) {
-            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
-        }
+
 
 
         g = 0;
@@ -152,17 +151,31 @@ public class Main extends JPanel{
                 }
             }
 
-            for (int i = 0; i < boomerangs.size(); i++) {
-                for (int j = 0; j < enemies.size(); j++) {
-                    if(boomerangs.get(i).intersects(
-                            new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
-                                    enemies.get(j).getWidth(), enemies.get(j).getHeight()))){
-                        boomerangs.remove(i);
-                        enemies.remove(j);
+            for (int i = boomerangs.size()-1; i >= 0; i--) {
+                if(boomerangs.size()>0) {
+                    for (int j = enemies.size()-1; j >= 0; j--) {
+                        if (boomerangs.get(i).intersects(
+                                new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
+                                        enemies.get(j).getWidth(), enemies.get(j).getHeight()))) {
+                            boomerangs.remove(i);
+                            enemies.remove(j);
+                            break;
+                        }
                     }
                 }
             }
 
+            if(enemies.size()<=10) {
+                if (interval % 50 == 0) {
+                    if (Math.random() > .5) {
+                        enemies.add(new Enemies(0, (int) (Math.random() * 450), 50, 50, 0, 5));
+                    } else {
+//                        System.out.println("h");
+                        enemies.add(new Enemies(500, (int) (Math.random() * 400), 50, 50, 180, 5));
+
+                    }
+                }
+            }
 
             repaint();
         }
