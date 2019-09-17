@@ -166,13 +166,22 @@ public class Main extends JPanel{
                 }
             }
 
+
             if(enemies.size()<=10) {
                 if (interval % 50 == 0) {
+                    Enemies a = null;
                     if (Math.random() > .5) {
-                        enemies.add(new Enemies(0, (int) (Math.random() * 450), 50, 50, 0, 5));
+                         a = new Enemies(0, (int) (Math.random() * 450), 50, 50, 0, 5);
+
+
                     } else {
 //                        System.out.println("h");
-                        enemies.add(new Enemies(500, (int) (Math.random() * 400), 50, 50, 180, 5));
+                         a = new Enemies(500, (int) (Math.random() * 400), 50, 50, 180, 5);
+
+
+                    }
+                    if (!(a.dist(x.getX()+x.getWidth()/2, x.getY() + x.getHeight()/2) < 150)){
+                        enemies.add(a);
 
                     }
                 }
@@ -193,9 +202,10 @@ public class Main extends JPanel{
         }
         for(Enemies p: enemies) {
             p.draw(g2, x.getX()+x.getWidth()/2, x.getY() + x.getHeight()/2);
-            if (p.intersects(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight()))){
+            if (p.intersects(new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight())) && !dead){
                 System.out.println("DEAD");
                 dead = true;
+                repaint();
             }
         }
         for(boomerang b: boomerangs){

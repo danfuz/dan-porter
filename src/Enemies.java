@@ -9,6 +9,11 @@ public class Enemies {
     private int x, y, width, height, direction, speed;
     private Point c;
     private BufferedImage pic;
+
+    public Point getC() {
+        return c;
+    }
+
     public Enemies(int xx, int yy, int w, int h, int d, int s){
         x = xx;
         y = yy;
@@ -59,6 +64,12 @@ public class Enemies {
 
 
     }
+    public double dist(int tx, int ty){
+        double ht = -ty+c.y;
+        double bt = -tx+c.x;
+        double hyp = Math.sqrt(ht*ht+bt*bt);
+        return hyp;
+    }
     public void move(){
         for (int i = 0; i < speed; i++) {
             x += 1 * Math.cos(Math.toRadians(direction));
@@ -72,7 +83,7 @@ public class Enemies {
         return new Rectangle(x,y,width,height);
     }
     public boolean intersects(Rectangle o){
-        if (new Rectangle(x,y,width,height).intersects(o)){
+        if (new Rectangle(x,y,width,height-10).intersects(o)){
             return true;
         }
         return false;
