@@ -83,7 +83,7 @@ public class Enemies {
         return new Rectangle(x,y,width,height);
     }
     public boolean intersects(Rectangle o){
-        if (new Rectangle(x,y,width,height-10).intersects(o)){
+        if (new Rectangle(x,y,width,height-15).intersects(o)){
             return true;
         }
         return false;

@@ -10,6 +10,7 @@ public class Main extends JPanel{
 
     public static final int WIDTH=600, HEIGHT=600;
     private Timer timer;
+    private int minesweeper;
     private mainCharacter x;
     private double g, rotate;
     private ArrayList<Platform> plat;
@@ -24,6 +25,8 @@ public class Main extends JPanel{
 
 
     public Main(){
+
+        minesweeper = 0;
 
         x = new mainCharacter(400,500,40,40);
 
@@ -42,6 +45,7 @@ public class Main extends JPanel{
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
+        plat.add(new WIN(550,0,50,50));
 
         for (int i = 0; i < 9; i++) {
             enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
@@ -141,7 +145,7 @@ public class Main extends JPanel{
                 x.moveY(-(int) (g));
             }
             if (!grounded && g < 24) {
-                g += .75;
+                g += .5;
             }
             for (int i = 0; i < enemies.size(); i++) {
                 enemies.get(i).move();
@@ -167,7 +171,7 @@ public class Main extends JPanel{
             }
 
 
-            if(enemies.size()<=10) {
+            if(enemies.size()<=1) {
                 if (interval % 50 == 0) {
                     Enemies a = null;
                     if (Math.random() > .5) {
@@ -186,6 +190,15 @@ public class Main extends JPanel{
                     }
                 }
             }
+            for (Platform p : plat){
+            if (p instanceof  WIN) {
+                WIN www = (WIN)(p);
+                if (www.intersects(new Rectangle(x.getX()-1, x.getY()-1, x.getWidth()+2, x.getHeight()+2))){
+                    minesweeper++;
+                    System.out.println(minesweeper);
+                }
+            }
+            }
 
             repaint();
         }
@@ -198,6 +211,12 @@ public class Main extends JPanel{
         Graphics2D g2 = (Graphics2D)g;
         g2.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
         for(Platform p: plat) {
+            if (p instanceof WIN){
+                g2.setColor(Color.GREEN);
+            }
+            else {
+                g2.setColor(Color.black);
+            }
             g2.fill(p.rec());
         }
         for(Enemies p: enemies) {
@@ -230,6 +249,9 @@ public class Main extends JPanel{
                     if (key == KeyEvent.VK_RIGHT) {
                         rightt = true;
                         leftt = false;
+                    }
+                    if (key == KeyEvent.VK_DOWN && g <=24) {
+                        g+=.2;
                     }
                     if (key == KeyEvent.VK_UP && grounded) {
                         jumpp = true;
