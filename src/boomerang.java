@@ -7,9 +7,9 @@ import java.awt.Rectangle;
 
 public class boomerang {
 
-    private int x, y, speed;
+    private int x, y, time, speed;
     private double yy;
-    private Boolean dir, up;
+    private Boolean dir, down;
     private BufferedImage pic;
     private int currentRotation;
     private Point loc;
@@ -25,9 +25,18 @@ public class boomerang {
         dir = d;
         currentRotation = 0;
         setPic("boomerang.png");
-        up = true;
+        down = true;
+        time = 0;
     }
 
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
 
     public void move(){
         int dist = 0;
@@ -49,10 +58,10 @@ public class boomerang {
 
         }
         yy += .3;
-        if(y >= 515){
-            up = false;
-        }
-        if(up) {
+//        if(y >= 515){
+//            down = false;
+//        }
+        if(down) {
             if (yy >= 1) {
                 y += 1;
                 yy -= 1;
@@ -61,6 +70,8 @@ public class boomerang {
 
         loc.setLocation(x, y);
     }
+
+
 
     public void setPic(String fileName) {
         try {
