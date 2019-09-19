@@ -16,6 +16,7 @@ public class Main extends JPanel{
     private ArrayList<Platform> plat;
     private ArrayList<Enemies> enemies;
     private ArrayList<boomerang> boomerangs;
+    private boomerang tetris;
     //private ArrayList<Platform> plat;
     private boolean leftt, rightt, jumpp, grounded;
     private boolean dead;
@@ -37,6 +38,7 @@ public class Main extends JPanel{
         jumpp = false;
         plat = new ArrayList<Platform>();
         boomerangs = new ArrayList<boomerang>();
+        tetris = new boomerang(-100, 0, false);
         enemies = new ArrayList<Enemies>();
         interval = 0;
 
@@ -112,17 +114,16 @@ public class Main extends JPanel{
         if(interval%2==0){
             rotate = 0;
         }
-        for (int i = 0; i < boomerangs.size(); i++) {
-            boomerangs.get(i).move();
-            boomerangs.get(i).setTime(boomerangs.get(i).getTime()+1);
 
-//            boomerangs.get(i).setCurrentRotation(3);
-            boomerangs.get(i).setCurrentRotation(boomerangs.get(i).getCurrentRotation()+(int)(rotate));
-            if (boomerangs.get(i).off()){
-                boomerangs.remove(i);
-                i--;
-            }
+        tetris.move();
+        tetris.setTime(tetris.getTime()+1);
+
+//            tetris.setCurrentRotation(3);
+        tetris.setCurrentRotation(tetris.getCurrentRotation()+(int)(rotate));
+        if (tetris.off()){
+
         }
+
 
 
 
@@ -158,19 +159,17 @@ public class Main extends JPanel{
                 }
             }
 
-            for (int i = boomerangs.size()-1; i >= 0; i--) {
-                if(boomerangs.size()>0) {
-                    for (int j = enemies.size()-1; j >= 0; j--) {
-                        if (boomerangs.get(i).intersects(
-                                new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
-                                        enemies.get(j).getWidth(), enemies.get(j).getHeight()))) {
-                            boomerangs.remove(i);
-                            enemies.remove(j);
-                            break;
-                        }
+
+                for (int j = enemies.size()-1; j >= 0; j--) {
+                    if (tetris.intersects(
+                            new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
+                                    enemies.get(j).getWidth(), enemies.get(j).getHeight()))) {
+                        enemies.remove(j);
+                        break;
                     }
                 }
             }
+
 
 
             if(enemies.size()<=1) {
@@ -200,7 +199,7 @@ public class Main extends JPanel{
                     System.out.println(minesweeper);
                 }
             }
-            }
+
 
             repaint();
         }
@@ -229,9 +228,7 @@ public class Main extends JPanel{
                 repaint();
             }
         }
-        for(boomerang b: boomerangs){
-            b.draw(g2);
-        }
+        tetris.draw(g2);
 
 
 
@@ -271,17 +268,7 @@ public class Main extends JPanel{
                             boomerangs.add(new boomerang(x.getX() + x.getWidth() + 2, x.getY(), true));
                         }
                     }
-                    else if(boomerangs.size()<=10) {
-                        if(boomerangs.get(boomerangs.size()-1).getTime()>100) {
-                            if (key == KeyEvent.VK_Z) {
-                                boomerangs.add(new boomerang(x.getX() - x.getWidth() - 2, x.getY(), false));
-                            }
-                            if (key == KeyEvent.VK_X) {
-                                boomerangs.add(new boomerang(x.getX() + x.getWidth() + 2, x.getY(), true));
-                            }
-                        }
 
-                    }
                 }
                 //System.out.println(jumpp + " " + grounded);
             }
