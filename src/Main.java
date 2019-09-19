@@ -114,6 +114,8 @@ public class Main extends JPanel{
         }
         for (int i = 0; i < boomerangs.size(); i++) {
             boomerangs.get(i).move();
+            boomerangs.get(i).setTime(boomerangs.get(i).getTime()+1);
+
 //            boomerangs.get(i).setCurrentRotation(3);
             boomerangs.get(i).setCurrentRotation(boomerangs.get(i).getCurrentRotation()+(int)(rotate));
             if (boomerangs.get(i).off()){
@@ -261,11 +263,24 @@ public class Main extends JPanel{
                         leftt = true;
                         rightt = false;
                     }
-                    if (key == KeyEvent.VK_Z){
-                        boomerangs.add(new boomerang(x.getX()-x.getWidth()-2,x.getY(),false));
+                    if(boomerangs.size()<1) {
+                        if (key == KeyEvent.VK_Z) {
+                            boomerangs.add(new boomerang(x.getX() - x.getWidth() - 2, x.getY(), false));
+                        }
+                        if (key == KeyEvent.VK_X) {
+                            boomerangs.add(new boomerang(x.getX() + x.getWidth() + 2, x.getY(), true));
+                        }
                     }
-                    if (key == KeyEvent.VK_X){
-                        boomerangs.add(new boomerang(x.getX()+x.getWidth()+2,x.getY(),true));
+                    else if(boomerangs.size()<=10) {
+                        if(boomerangs.get(boomerangs.size()-1).getTime()>100) {
+                            if (key == KeyEvent.VK_Z) {
+                                boomerangs.add(new boomerang(x.getX() - x.getWidth() - 2, x.getY(), false));
+                            }
+                            if (key == KeyEvent.VK_X) {
+                                boomerangs.add(new boomerang(x.getX() + x.getWidth() + 2, x.getY(), true));
+                            }
+                        }
+
                     }
                 }
                 //System.out.println(jumpp + " " + grounded);
