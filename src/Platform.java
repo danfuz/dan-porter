@@ -12,7 +12,7 @@ public class Platform {
         return new Rectangle(x,y,width,height);
     }
     public boolean topC(Rectangle r){
-        int x1 = r.x+1;
+        int  x1 = r.x+1;
         int x2 = r.x+r.width-1;
         int x3 = r.x+r.width/2;
         int yy = r.y+r.height;

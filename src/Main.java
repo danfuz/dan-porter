@@ -115,7 +115,7 @@ public class Main extends JPanel{
             rotate = 0;
         }
 
-        tetris.move();
+        tetris.move(x.getX()+x.getWidth()/2, x.getY() + x.getHeight()/2);
         tetris.setTime(tetris.getTime()+1);
 
 //            tetris.setCurrentRotation(3);
@@ -245,6 +245,9 @@ public class Main extends JPanel{
             public void keyPressed(KeyEvent e) {
                 if (dead == false) {
                     int key = e.getKeyCode();
+                    if (key == KeyEvent.VK_SPACE) {
+                        tetris.callB();
+                    }
                     if (key == KeyEvent.VK_RIGHT) {
                         rightt = true;
                         leftt = false;
