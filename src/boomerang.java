@@ -55,6 +55,14 @@ public class boomerang {
         this.live = live;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void move(){
         int dist = 0;
         int d = Math.abs(Main.WIDTH/2-(x+20));

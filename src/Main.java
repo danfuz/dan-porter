@@ -124,6 +124,7 @@ public class Main extends JPanel{
         //            tetris.setCurrentRotation(3);
                 tetris.setCurrentRotation(tetris.getCurrentRotation() + (int) (rotate));
             }
+            else {tetris.setX(-100); tetris.setY(-100);}
 //        if (tetris.off()){
 //
 //        }
@@ -264,11 +265,13 @@ public class Main extends JPanel{
                         leftt = true;
                         rightt = false;
                     }
-                    if (key == KeyEvent.VK_Z) {
-                        tetris = new boomerang(x.getX()-20, x.getY(), false, true);
-                    }
-                    if (key == KeyEvent.VK_X) {
-                        tetris = new boomerang(x.getX()+40, x.getY(), true, true);
+                    if(!tetris.isLive()) {
+                        if (key == KeyEvent.VK_Z) {
+                            tetris = new boomerang(x.getX() - 20, x.getY(), false, true);
+                        }
+                        if (key == KeyEvent.VK_X) {
+                            tetris = new boomerang(x.getX() + 40, x.getY(), true, true);
+                        }
                     }
 
                 }
