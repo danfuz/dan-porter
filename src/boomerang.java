@@ -54,20 +54,21 @@ public class boomerang {
     }
 
 
-    public void move(int tx, int ty){
-
-        if (!call) {
-            int dist = 0;
-            int d = Math.abs(Main.WIDTH / 2 - (x + 20));
-            int speed = Math.abs(-d / 90 + 6);
-            if (x + 40 >= Main.WIDTH) {
-                dir = false;
-            }
-            if (x <= 0) {
-                dir = true;
-            }
-            if (dir) {
-                x += speed;
+//    public void move(int tx, int ty){
+//
+//        if (!call) {
+//            int dist = 0;
+//            int d = Math.abs(Main.WIDTH / 2 - (x + 20));
+//            int speed = Math.abs(-d / 90 + 6);
+//            if (x + 40 >= Main.WIDTH) {
+//                dir = false;
+//            }
+//            if (x <= 0) {
+//                dir = true;
+//            }
+//            if (dir) {
+//                x += speed;
+//            }
     public Boolean isLive() {
         return live;
     }
@@ -76,18 +77,19 @@ public class boomerang {
         this.live = live;
     }
 
-    public void move(){
-        int dist = 0;
-        int d = Math.abs(Main.WIDTH/2-(x+20));
-        int speed = Math.abs(-d/90+6);
-        if (x+40>=Main.WIDTH){
-            dir = false;
-        }
-        if (x<=0){
-            dir = true;
-        }
-        if(dir){
-            x += speed;
+    public void move(int tx, int ty){
+        if (!call) {
+            int dist = 0;
+            int d = Math.abs(Main.WIDTH / 2 - (x + 20));
+            int speed = Math.abs(-d / 100 + 6);
+            if (x + 40 >= Main.WIDTH) {
+                dir = false;
+            }
+            if (x <= 0) {
+                dir = true;
+            }
+            if (dir) {
+                x += speed;
 
             } else {
                 x -= speed;
@@ -103,15 +105,17 @@ public class boomerang {
                     y += 1;
                     yy -= 1;
                 }
-        }
-        yy += .3;
-        if(y >= 515){
-            down = false;
-        }
-        if(down) {
-            if (yy >= 1) {
-                y += 1;
-                yy -= 1;
+            }
+            yy += .3;
+            if (y >= 515) {
+                down = false;
+            }
+            if (down) {
+                if (yy >= 1) {
+                    y += 1;
+                    yy -= 1;
+                }
+
             }
             fakeY = y;
             fakeX = x;

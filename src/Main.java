@@ -118,7 +118,7 @@ public class Main extends JPanel{
                     rotate = 0;
                 }
 
-                tetris.move();
+                tetris.move(x.getX() + x.getWidth()/2, x.getY() + x.getHeight()/2);
                 tetris.setTime(tetris.getTime() + 1);
         tetris.move(x.getX()+x.getWidth()/2, x.getY() + x.getHeight()/2);
         tetris.setTime(tetris.getTime()+1);
