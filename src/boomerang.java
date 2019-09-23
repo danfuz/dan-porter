@@ -13,6 +13,7 @@ public class boomerang {
     private BufferedImage pic;
     private int currentRotation;
     private Point loc;
+    private boolean call;
 
 
 
@@ -21,6 +22,7 @@ public class boomerang {
         this.x = x;
         this.y = y;
         this.live = live;
+        call = false;
         yy = 0;
         loc = new Point(x,y);
         dir = d;
@@ -33,6 +35,12 @@ public class boomerang {
 
     public void setTime(int time) {
         this.time = time;
+    }
+    public void callB(){
+        call = true;
+    }
+    public boolean getCall(){
+        return call;
     }
 
     public int getTime() {
