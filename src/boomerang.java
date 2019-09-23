@@ -9,7 +9,7 @@ public class boomerang {
 
     private int x, y, time, speed;
     private double yy;
-    private Boolean dir, down;
+    private Boolean dir, down, live;
     private BufferedImage pic;
     private int currentRotation;
     private Point loc;
@@ -20,9 +20,10 @@ public class boomerang {
 
 
 
-    public boomerang(int x, int y, boolean d){
+    public boomerang(int x, int y, boolean d, boolean live){
         this.x = x;
         this.y = y;
+        this.live = live;
         fakeX = 0;
         fakeY = 0;
         xCall = 0;
@@ -67,6 +68,26 @@ public class boomerang {
             }
             if (dir) {
                 x += speed;
+    public Boolean isLive() {
+        return live;
+    }
+
+    public void setLive(Boolean live) {
+        this.live = live;
+    }
+
+    public void move(){
+        int dist = 0;
+        int d = Math.abs(Main.WIDTH/2-(x+20));
+        int speed = Math.abs(-d/90+6);
+        if (x+40>=Main.WIDTH){
+            dir = false;
+        }
+        if (x<=0){
+            dir = true;
+        }
+        if(dir){
+            x += speed;
 
             } else {
                 x -= speed;
@@ -82,6 +103,15 @@ public class boomerang {
                     y += 1;
                     yy -= 1;
                 }
+        }
+        yy += .3;
+        if(y >= 515){
+            down = false;
+        }
+        if(down) {
+            if (yy >= 1) {
+                y += 1;
+                yy -= 1;
             }
             fakeY = y;
             fakeX = x;
@@ -153,6 +183,8 @@ public class boomerang {
         }
         return false;
     }
+
+
 
 
 
