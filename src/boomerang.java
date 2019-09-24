@@ -14,6 +14,8 @@ public class boomerang {
     private int currentRotation;
     private Point loc;
     private boolean call;
+    private double xCall, yCall;
+    private double fakeX, fakeY;
 
 
 
@@ -22,6 +24,10 @@ public class boomerang {
         this.x = x;
         this.y = y;
         this.live = live;
+        fakeX = 0;
+        fakeY = 0;
+        xCall = 0;
+        yCall = 0;
         call = false;
         yy = 0;
         loc = new Point(x,y);
@@ -39,7 +45,7 @@ public class boomerang {
     public void callB(){
         call = true;
     }
-    public boolean getCall(){
+    public boolean isFrogger(int frog){
         return call;
     }
 
@@ -47,6 +53,22 @@ public class boomerang {
         return time;
     }
 
+
+//    public void move(int tx, int ty){
+//
+//        if (!call) {
+//            int dist = 0;
+//            int d = Math.abs(Main.WIDTH / 2 - (x + 20));
+//            int speed = Math.abs(-d / 90 + 6);
+//            if (x + 40 >= Main.WIDTH) {
+//                dir = false;
+//            }
+//            if (x <= 0) {
+//                dir = true;
+//            }
+//            if (dir) {
+//                x += speed;
+//            }
     public Boolean isLive() {
         return live;
     }
@@ -55,42 +77,65 @@ public class boomerang {
         this.live = live;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void move(int tx, int ty){
+        if (!call) {
+            int dist = 0;
+            int d = Math.abs(Main.WIDTH / 2 - (x + 20));
+            int speed = Math.abs(-d / 100 + 6);
+            if (x + 40 >= Main.WIDTH) {
+                dir = false;
+            }
+            if (x <= 0) {
+                dir = true;
+            }
+            if (dir) {
+                x += speed;
 
-    public void setY(int y) {
-        this.y = y;
-    }
+            } else {
+                x -= speed;
 
-    public void move(){
-        int dist = 0;
-        int d = Math.abs(Main.WIDTH/2-(x+20));
-        int speed = Math.abs(-d/90+6);
-        if (x+40>=Main.WIDTH){
-            dir = false;
-        }
-        if (x<=0){
-            dir = true;
-        }
-        if(dir){
-            x += speed;
 
+            }
+            yy += .3;
+//        if(y >= 515){
+//            down = false;
+//        }
+            if (down) {
+                if (yy >= 1) {
+                    y += 1;
+                    yy -= 1;
+                }
+            }
+            yy += .3;
+            if (y >= 515) {
+                down = false;
+            }
+            if (down) {
+                if (yy >= 1) {
+                    y += 1;
+                    yy -= 1;
+                }
+
+            }
+            fakeY = y;
+            fakeX = x;
         }
         else{
-            x-= speed;
+            double ht = -ty+y;
+            double bt = -tx+x;
+            double hyp = Math.sqrt(ht*ht+bt*bt);
+            if (hyp >= 5) {
+                double ratio = ht / bt;
+                double rat = 5 / (Math.abs(ht) + Math.abs(bt));
+                double yM = rat * ht;
+                double xM = rat * bt;
+                fakeX -= xM;
+                fakeY -= yM;
+                y = (int)fakeY;
+                x = (int)fakeX;
 
-
-        }
-        yy += .3;
-        if(y >= 515){
-            down = false;
-        }
-        if(down) {
-            if (yy >= 1) {
-                y += 1;
-                yy -= 1;
             }
+
         }
 
         loc.setLocation(x, y);
