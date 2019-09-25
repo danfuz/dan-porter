@@ -49,10 +49,11 @@ public class Main extends JPanel{
         plat.add(new Platform(500,0,50,500));
         plat.add(new WIN(550,0,50,50));
 
-        for (int i = 0; i < 9; i++) {
-            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
-        }
+//        for (int i = 0; i < 9; i++) {
+//            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+//        }
 
+        enemies.add(new Enemies(300,300, 40, 40, 0, 5, 150, 510));
 
         g = 0;
         grounded = false;
@@ -170,6 +171,8 @@ public class Main extends JPanel{
                             new Rectangle(enemies.get(j).getX(), enemies.get(j).getY(),
                                     enemies.get(j).getWidth(), enemies.get(j).getHeight()))) {
                         enemies.remove(j);
+                        minesweeper+= 100;
+                        System.out.println(minesweeper);
                         break;
                     }
                 }

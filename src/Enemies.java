@@ -6,7 +6,7 @@ import java.io.File;
 
 
 public class Enemies {
-    private int x, y, width, height, direction, speed;
+    private int x, y, width, height, direction, speed, left, right;
     private Point c;
     private BufferedImage pic;
 
@@ -23,7 +23,23 @@ public class Enemies {
         direction = d;
         speed = s;
         setPic("jiming.png");
+        left = 0;
+        right = Main.WIDTH;
     }
+
+    public Enemies(int xx, int yy, int w, int h, int d, int s, int left, int right){
+        x = xx;
+        y = yy;
+        c = new Point(xx+w/2, yy+h/2);
+        width = w;
+        height = h;
+        direction = d;
+        speed = s;
+        setPic("jiming.png");
+        this.right = right;
+        this.left = left;
+    }
+
     public void draw(Graphics2D g2, int tx, int ty) {
         c.setLocation(x,y);
         //System.out.println(tx + " " + ty);
@@ -73,12 +89,14 @@ public class Enemies {
     public void move(){
         for (int i = 0; i < speed; i++) {
             x += 1 * Math.cos(Math.toRadians(direction));
-            if (x + width >= Main.WIDTH || x <= 0){
+            if (x + width >= right || x <= left){
                 direction +=180;
                 x += 1 * Math.cos(Math.toRadians(direction));
             }
         }
     }
+
+
     public Rectangle rec(){
         return new Rectangle(x,y,width,height);
     }
