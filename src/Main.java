@@ -47,11 +47,13 @@ public class Main extends JPanel{
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
-        plat.add(new WIN(550,0,50,50));
+        //plat.add(new WIN(550,0,50,50));
 
-        for (int i = 0; i < 9; i++) {
-            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
-        }
+//        for (int i = 0; i < 9; i++) {
+//            enemies.add(new Enemies(50*i, 400, 40, 40, 0, 5));
+//        }
+        enemies.add(new stalkerMing(400, 20, 40, 40, 0, 0));
+
 
 
         g = 0;
@@ -158,7 +160,7 @@ public class Main extends JPanel{
                 g += .5;
             }
             for (int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).move();
+                enemies.get(i).move(x.getX() + x.getWidth()/2, x.getY() + x.getHeight()/2);
             }
 
 

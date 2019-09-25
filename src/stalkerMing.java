@@ -1,22 +1,18 @@
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
-
-public class Enemies {
+public class stalkerMing extends Enemies{
     private int x, y, width, height, direction, speed;
     private Point c;
-    private BufferedImage pic;
+    private double fakeX, fakeY;
+    public stalkerMing(int xx, int yy, int w, int h, int d, int s){
+        super(xx,yy,w,h,d,s);
 
-    public Point getC() {
-        return c;
-    }
-
-    public Enemies(int xx, int yy, int w, int h, int d, int s){
         x = xx;
         y = yy;
+        fakeY = y;
+        fakeX = x;
+
         c = new Point(xx+w/2, yy+h/2);
         width = w;
         height = h;
@@ -24,11 +20,19 @@ public class Enemies {
         speed = s;
         setPic("jiming.png");
     }
-
-    public BufferedImage getPic() {
-        return pic;
+    public void move(int tx, int ty) {
+        double ht = -ty+c.y;
+        double bt = -tx+c.x;
+        double hyp = Math.sqrt(ht*ht+bt*bt);
+        double rat = 3 / (Math.abs(ht) + Math.abs(bt));
+        double yM = rat * ht;
+        double xM = rat * bt;
+        fakeX -= xM;
+        fakeY -= yM;
+        y = (int)fakeY;
+        x = (int)fakeX;
+        c.setLocation(x,y);
     }
-
     public void draw(Graphics2D g2, int tx, int ty) {
         c.setLocation(x,y);
         //System.out.println(tx + " " + ty);
@@ -57,7 +61,7 @@ public class Enemies {
         g2.translate(-(x+15), -(y+15));
 
 
-        g2.drawImage(pic, x, y, null);
+        g2.drawImage(super.getPic(), x, y, null);
 
         g2.translate(x+15, y+15);
         g2.rotate(Math.toRadians(-angle));
@@ -69,52 +73,12 @@ public class Enemies {
 
 
     }
-    public double dist(int tx, int ty){
-        double ht = -ty+c.y;
-        double bt = -tx+c.x;
-        double hyp = Math.sqrt(ht*ht+bt*bt);
-        return hyp;
-    }
-    public void move(int tx, int ty){
-        for (int i = 0; i < speed; i++) {
-            x += 1 * Math.cos(Math.toRadians(direction));
-            if (x + width >= Main.WIDTH || x <= 0){
-                direction +=180;
-                x += 1 * Math.cos(Math.toRadians(direction));
-            }
-        }
-    }
-    public Rectangle rec(){
-        return new Rectangle(x,y,width,height);
-    }
     public boolean intersects(Rectangle o){
         if (new Rectangle(x,y,width,height-15).intersects(o)){
             return true;
         }
         return false;
     }
-
-    public void setPic(String fileName) {
-        try {
-            pic = ImageIO.read(new File("res/" + fileName));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setX(int xx){
-        x = x;
-        c.setLocation(x,y);
-
-    }
-    public void setY(int yy){
-        y = y;
-        c.setLocation(x,y);
-
-    }
-
     public int getWidth() {
         return width;
     }
@@ -130,3 +94,4 @@ public class Enemies {
         return y;
     }
 }
+
