@@ -47,6 +47,8 @@ public class Main extends JPanel{
         plat.add(new Platform(0,550,600,50));
         plat.add(new Platform(100,300,50,500));
         plat.add(new Platform(500,0,50,500));
+        plat.add(new Platform(250, 0, 50, 400));
+        plat.add(new Platform(375,300,50,500));
         //plat.add(new WIN(550,0,50,50));
 
 //        for (int i = 0; i < 9; i++) {
