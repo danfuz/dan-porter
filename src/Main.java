@@ -280,10 +280,13 @@ public class Main extends JPanel{
                     }
                     if(!tetris.isLive()) {
                         if (key == KeyEvent.VK_Z) {
-                            tetris = new boomerang(x.getX() - 20, x.getY(), false, true);
+                            tetris = new boomerang(x.getX() - 20-10, x.getY(), false, true);
+                            System.out.println("Z");
                         }
                         if (key == KeyEvent.VK_X) {
-                            tetris = new boomerang(x.getX() + 40, x.getY(), true, true);
+                            tetris = new boomerang(x.getX() + 40+10, x.getY(), true, true);
+                            System.out.println("X");
+
                         }
                     }
 
